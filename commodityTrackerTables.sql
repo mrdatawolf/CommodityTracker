@@ -83,3 +83,16 @@ CREATE TABLE Servers_Stations
     station_id int NOT NULL
 );
 
+create table Permissions
+(
+  id   int,
+  name int
+);
+
+create table Permissions_Users
+(
+  user_id        int not null,
+  permissions_id int not null
+);
+
+
