@@ -6,7 +6,7 @@ This will use the new torch plugin to take econ data and use it to show market d
 Initially we want to be able to ingest current market data and show current values.
 
 
-![](banner1.jpg)
+![](images/repository-card.png)
 
 
 ## Usage example
