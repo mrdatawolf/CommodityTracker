@@ -11,7 +11,8 @@ Initially we want to be able to ingest current market data and show current valu
 
 ## Usage example
 
-This allows all your users to see how your systems various commodity markets are doing. 
+This will allow all your users to see how your system's various commodity markets are doing and check prices.
+
 As a store manager maybe you want to use this to undercut your competitors!
 
 
