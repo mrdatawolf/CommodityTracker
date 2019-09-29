@@ -32,6 +32,8 @@ This will require the torch econ plugin.  But it's still in early alpha
     * Started building the update page to accept the post data and deal with it.
 * 0.0.5
     * Continued to flesh out the update page and the functions it needs.
+* 0.0.6
+    * Lots of DB changes. Added a common php file and made the SQL connection use PDO so we can use sqlite/mysql whatever as we work. fleshed out more of the update code.  Also started workign on dispaying data from the DB to the users.
 
 ## Meta
 
