@@ -2,23 +2,37 @@
 CREATE TABLE Commodities
 (
     id int,
-    name string
+    title string,
+    server_id int
 );
 CREATE UNIQUE INDEX Commodity_id_uindex ON Commodity (id);
+
+create table Commodities_Data
+(
+    commodity_id int,
+    station_id   int,
+    faction_id   int,
+    store_id     int,
+    server_id    int,
+    amount       double,
+    price        double,
+    created_at   text,
+    updated_at   text
+);
 
 CREATE TABLE Stations
 (
     id int,
     faction_id int,
     station_type int,
-    name string
+    title string
 );
 CREATE UNIQUE INDEX Station_id_uindex ON Station (id);
 
 CREATE TABLE Factions
 (
     id int,
-    name varchar
+    title varchar
 );
 CREATE UNIQUE INDEX Faction_id_uindex ON Faction (id);
 
@@ -37,6 +51,7 @@ CREATE TABLE Commodities_Amount
     station_id int,
     faction_id int,
     store_id int,
+    created_at text,
     amount double
 );
 
@@ -50,7 +65,7 @@ create unique index Factions_Stations_station_id_uindex on Factions_Stations (st
 CREATE TABLE Types
 (
     id int,
-    name text
+    title text
 );
 CREATE UNIQUE INDEX types_id_uindex ON Types (id);
 
@@ -68,7 +83,7 @@ create unique index Users_id_uindex
 CREATE TABLE Servers
 (
     id int NOT NULL,
-    Name int
+    title int
 );
 
 create table Servers_Users
@@ -86,7 +101,7 @@ CREATE TABLE Servers_Stations
 create table Permissions
 (
   id   int,
-  name int
+  title int
 );
 
 create table Permissions_Users

@@ -6,7 +6,9 @@
  * Time: 09:05 PM
  */
 
-$conn = dbConnect();
+include_once('common.php');
+$conn = dbConnect('sqlite');
+//$conn = dbConnect('mysql');
 
 //gather the data we want and sanitize it
 if(isValidRequestedType()) {
@@ -39,8 +41,6 @@ if(isValidRequestedType()) {
             echo "Error: nothing matched";
     }
 }
-
-mysqli_close($conn);
 
 //now we do the code for adding and updating records
 function upsertFaction($factionId, $name, $conn) {
@@ -78,11 +78,12 @@ function upsertCommodity($id, $stationId, $factionId, $storeId, $amount, $conn) 
         updateCommodity($id, $amount, $stationId, $factionId, $storeId, $conn);
     }
     
-    upsertCommodityAmount($id, $stationId, $factionId, $storeId);
+    upsertCommodityData($id, $stationId, $factionId, $storeId);
 }
 
-function upsertCommodityAmount($id, $stationId, $factionId, $storeId) {
-    $sql = "SELECT count(*) FROM Commodities_Amount WHERE commodity_id=$id AND station_id=$stationId and faction_id=$factionId AND store_id=$storeId";
+function upsertCommodityData($id, $stationId, $factionId, $storeId, $conn) {
+    $sql = "SELECT count(*) FROM Commodities_Data WHERE commodity_id=$id AND station_id=$stationId and faction_id=$factionId AND store_id=$storeId";
+    return ($conn->query($sql) === TRUE);
 }
 
 /**
@@ -92,26 +93,27 @@ function upsertCommodityAmount($id, $stationId, $factionId, $storeId) {
  * @param $factionId
  * @param $storeId
  * @param $conn
+ * @return bool
  */
 function updateCommodity($id, $amount, $stationId, $factionId, $storeId, $conn) {
-    $sql = "UPDATE Commodities_Amount SET amount = $amount WHERE commodity_id=$id AND station_id=$stationId AND faction_id=$factionId AND store_id=$storeId";
-    if (mysqli_query($conn, $sql)) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
+    $updatedAt = date("Y-m-d | h:i:sa"); //this will be used to update updated_at
+    $sql = "UPDATE Commodities_Data SET amount = $amount, updated_at=$updatedAt WHERE commodity_id=$id AND station_id=$stationId AND faction_id=$factionId AND store_id=$storeId";
+    return ($conn->query($sql) === TRUE);
 }
 
 function updateFaction($id, $conn) {
-
+    $sql = "UPDATE Factions where id=". $id;
+    return ($conn->query($sql) === TRUE);
 }
 
 function updateStore($id, $conn) {
-
+    $sql = "UPDATE Stores where id=". $id;
+    return ($conn->query($sql) === TRUE);
 }
 
 function updateStation($id, $conn) {
-
+    $sql = "UPDATE Stations where id=". $id;
+    return ($conn->query($sql) === TRUE);
 }
 /**
  * @param $id
@@ -122,32 +124,31 @@ function updateStation($id, $conn) {
  * @param $conn
  */
 function addCommodity($id, $amount, $stationId, $factionId, $storeId, $conn) {
-    $sql = "INSERT INTO Commodities_Amount (commodity_id, station_id, faction_id, store_id, amount) VALUES ($id, $stationId, $factionId, $storeId, $amount)";
-    if (mysqli_query($conn, $sql)) {
-    } else {
-        //echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
+    $updatedAt = date("Y-m-d | h:i:sa"); //this will be used to update updated_at
+    $createdAt = date("Y-m-d | h:i:sa"); //this will be used to update created_at
+    $sql = "INSERT INTO Commodities_Data (commodity_id, station_id, faction_id, store_id, amount) VALUES ($id, $stationId, $factionId, $storeId, $amount)";
+    return ($conn->query($sql) === TRUE);
 }
 
 /**
  * @param $factionId
  * @param $name
- * @param $conn
+ * @param PDO $conn
  * @return string
  */
 function addFaction($factionId, $name, $conn) {
-    $sql = "INSERT INTO Factions (id, name) VALUES ($factionId, $name)";
-    mysqli_query($conn, $sql);
-    
-    return  "New record created successfully";
+    $sql = "INSERT INTO Factions (id, title) VALUES ($factionId, $name)";
+    return ($conn->query($sql) === TRUE);
 }
 
 function addStore($id, $name, $conn) {
-
+    $sql = "INSERT INTO  Stores (id,title) VALUES ($id, $name)";
+    return ($conn->query($sql) === TRUE);
 }
 
 function addStation($id, $factionId, $name, $conn) {
-    $sql = "INSERT INTO Stations (id, faction_id, name) VALUES ($id, $factionId, $name)";
+    $sql = "INSERT INTO Stations (id, faction_id, title) VALUES ($id, $factionId, $name)";
+    return ($conn->query($sql) === TRUE);
 }
 
 
@@ -160,7 +161,7 @@ function addStation($id, $factionId, $name, $conn) {
  */
 function doesItExist($table, $id, $conn) {
     $sql = "SELECT count(*) FROM $table WHERE id=$id";
-    return (mysqli_query($conn, $sql) > 0);
+    return ($conn->query($sql) === TRUE);
 }
 
 /**
@@ -189,24 +190,4 @@ function isValidRequestedType() {
     }
     
     return true;
-}
-
-/**
- * @return mysqli
- */
-function dbConnect() {
-    $hostname="localhost";
-    $username="freder26_php";
-    $password="don't post passwords in discord";
-    $dbname="freder26_drup354";
-    $usertable="test_table";
-
-// Create connection
-    $conn = mysqli_connect($hostname, $username, $password, $dbname);
-// Check connection
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    
-    return $conn;
 }
