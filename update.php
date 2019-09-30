@@ -14,28 +14,24 @@ $conn = dbConnect('sqlite');
 if(isValidRequestedType()) {
     $whatToWorkOn = sanitizeInput($_POST['dataType']);
 //the rest we will set a default of null so when we workign thru our workload we have a consistent value for data to ignore.
-    $id         = (empty($_POST['commodity_id'])) ? null : sanitizeInput($_POST['commodity_id']);
-    $stationId  = (empty($_POST['station_id'])) ? null : sanitizeInput($_POST['station_id']);
-    $factionId  = (empty($_POST['faction_id'])) ? null : sanitizeInput($_POST['faction_id']);
-    $storeId    = (empty($_POST['store_id'])) ? null : sanitizeInput($_POST['store_id']);
-    $amount     = (empty($_POST['amount'])) ? null : sanitizeInput($_POST['amount']);
-    $name       = (empty($_POST['name'])) ? null : sanitizeInput($_POST['name']);
+    $serverId       = (empty($_POST['ServerId'])) ? null : sanitizeInput($_POST['ServerId']);
+    $id             = (empty($_POST['ItemId'])) ? null : sanitizeInput($_POST['ItemId']);
+    $itemName       = (empty($_POST['ItemName'])) ? null : sanitizeInput($_POST['ItemName']);
+    $stationId      = (empty($_POST['StationId'])) ? null : sanitizeInput($_POST['StationId']);
+    $stationName    = (empty($_POST['StationName'])) ? null : sanitizeInput($_POST['StationName']);
+    $factionId      = (empty($_POST['FactionId'])) ? null : sanitizeInput($_POST['FactionId']);
+    $factionName    = (empty($_POST['FactionName'])) ? null : sanitizeInput($_POST['FactionName']);
+    $storeId        = 1;
+    $amount         = (empty($_POST['Amount'])) ? null : sanitizeInput($_POST['Amount']);
+    $price          = (empty($_POST['Price'])) ? null : sanitizeInput($_POST['Price']);
 
 //now we take what we think is fleshed out and ready to go data and work with it.
     switch ($whatToWorkOn) {
-        case ('commodity') :
+        case ('1') :
             //we are going to upsert based on the data we receive
             upsertCommodity($id, $stationId, $factionId, $storeId, $amount, $conn);
             break;
-        case ('faction') :
-            upsertFaction($factionId, $name, $conn);
-            break;
-        case ('station') :
-            upsertStation($stationId, $factionId, $name, $conn);
-            break;
-        case ('store') :
-            upsertStore($storeId, $factionId, $stationId, $conn);
-            break;
+            //more cases as needed
         default :
             http_response_code(501);
             echo "Error: nothing matched";
@@ -43,6 +39,13 @@ if(isValidRequestedType()) {
 }
 
 //now we do the code for adding and updating records
+
+//initially we are going to have the upserts...which means we are going to update the thing if it is in our database otherwise we will insert it.
+/**
+ * @param $factionId
+ * @param $name
+ * @param $conn
+ */
 function upsertFaction($factionId, $name, $conn) {
     if(doesItExist('Factions', $factionId, $conn)) {
         updateFaction($factionId, $conn);
@@ -51,6 +54,13 @@ function upsertFaction($factionId, $name, $conn) {
     }
 }
 
+/**
+ * @param $stationId
+ * @param $factionId
+ * @param $name
+ * @param $conn
+ * @return bool
+ */
 function upsertStation($stationId, $factionId, $name, $conn) {
     if (doesItExist('Stations', $stationId, $conn)) {
         addStation($stationId, $factionId, $name, $conn);
@@ -61,6 +71,13 @@ function upsertStation($stationId, $factionId, $name, $conn) {
     return true;
 }
 
+/**
+ * @param $storeId
+ * @param $factionId
+ * @param $stationId
+ * @param $conn
+ * @return bool
+ */
 function upsertStore($storeId, $factionId, $stationId, $conn) {
     if (doesItExist('Stores', $stationId, $conn)) {
         addStore($storeId, $stationId,$conn);
@@ -71,19 +88,25 @@ function upsertStore($storeId, $factionId, $stationId, $conn) {
     return true;
 }
 
-function upsertCommodity($id, $stationId, $factionId, $storeId, $amount, $conn) {
+/**
+ * @param $id
+ * @param $name
+ * @param $stationId
+ * @param $factionId
+ * @param $storeId
+ * @param $amount
+ * @param $price
+ * @param $serverId
+ * @param PDO $conn
+ */
+function upsertCommodity($id, $name, $stationId, $factionId, $storeId, $amount, $price, $serverId, $conn) {
     if (doesItExist('Commodities', $id, $conn)) {
-        addCommodity($id, $amount, $stationId, $factionId, $storeId, $conn);
+        addCommodity($id, $name, $conn);
     } else {
-        updateCommodity($id, $amount, $stationId, $factionId, $storeId, $conn);
+        updateCommodity($id, $name, $conn);
     }
-    
-    upsertCommodityData($id, $stationId, $factionId, $storeId);
-}
-
-function upsertCommodityData($id, $stationId, $factionId, $storeId, $conn) {
-    $sql = "SELECT count(*) FROM Commodities_Data WHERE commodity_id=$id AND station_id=$stationId and faction_id=$factionId AND store_id=$storeId";
-    return ($conn->query($sql) === TRUE);
+    //so now we have put in/updated the commodity it's self but we still need to put in the data for it.
+    upsertCommodityData($id, $amount, $price, $stationId, $factionId, $storeId, $serverId, $conn);
 }
 
 /**
@@ -93,40 +116,74 @@ function upsertCommodityData($id, $stationId, $factionId, $storeId, $conn) {
  * @param $factionId
  * @param $storeId
  * @param $conn
+ */
+function upsertCommodityData($id, $amount, $price, $stationId, $factionId, $storeId, $serverId, $conn) {
+    if (doesItExist('Commodities_Data', $id, $conn)) {
+        addCommodityData($id, $amount, $price, $stationId, $factionId, $storeId, $serverId, $conn);
+    } else {
+        updateCommodityData($id, $amount, $price, $stationId, $factionId, $storeId, $serverId, $conn);
+    }
+}
+
+//Now we run thru the various updates we might want to do.
+/**
+ * @param $id
+ * @param $name
+ * @param PDO $conn
  * @return bool
  */
-function updateCommodity($id, $amount, $stationId, $factionId, $storeId, $conn) {
-    $updatedAt = date("Y-m-d | h:i:sa"); //this will be used to update updated_at
-    $sql = "UPDATE Commodities_Data SET amount = $amount, updated_at=$updatedAt WHERE commodity_id=$id AND station_id=$stationId AND faction_id=$factionId AND store_id=$storeId";
+function updateCommodity($id, $name, $conn) {
+    $sql = "UPDATE Commodities SET title='" . $name . "' WHERE id=" . $id;
     return ($conn->query($sql) === TRUE);
 }
-
-function updateFaction($id, $conn) {
-    $sql = "UPDATE Factions where id=". $id;
-    return ($conn->query($sql) === TRUE);
-}
-
-function updateStore($id, $conn) {
-    $sql = "UPDATE Stores where id=". $id;
-    return ($conn->query($sql) === TRUE);
-}
-
-function updateStation($id, $conn) {
-    $sql = "UPDATE Stations where id=". $id;
+function updateCommodityData($id, $amount, $price, $stationId, $factionId, $storeId, $serverId, $conn) {
+    $sql = "UPDATE Commodities_Data SET amount='" . $amount . "', price='". $price . "', station_id='" . $stationId . "', faction_id='". $factionId . "', store_id='" . $storeId . "', server_id='". $serverId . "'  WHERE commodity_id=" . $id;
     return ($conn->query($sql) === TRUE);
 }
 /**
  * @param $id
- * @param $amount
- * @param $stationId
- * @param $factionId
- * @param $storeId
- * @param $conn
+ * @param $name
+ * @param PDO $conn
+ * @return bool
  */
-function addCommodity($id, $amount, $stationId, $factionId, $storeId, $conn) {
-    $updatedAt = date("Y-m-d | h:i:sa"); //this will be used to update updated_at
-    $createdAt = date("Y-m-d | h:i:sa"); //this will be used to update created_at
-    $sql = "INSERT INTO Commodities_Data (commodity_id, station_id, faction_id, store_id, amount) VALUES ($id, $stationId, $factionId, $storeId, $amount)";
+function updateFaction($id, $name, $conn) {
+    $sql = "UPDATE Factions SET title='" . $name . "' WHERE id=". $id;
+    return ($conn->query($sql) === TRUE);
+}
+
+/**
+ * @param $id
+ * @param $name
+ * @param PDO $conn
+ * @return bool
+ */
+function updateStore($id, $name, $conn) {
+    $sql = "UPDATE Stores SET title='" . $name . "' WHERE id=". $id;
+    return ($conn->query($sql) === TRUE);
+}
+
+/**
+ * @param $id
+ * @param $name
+ * @param PDO $conn
+ * @return bool
+ */
+function updateStation($id, $name, $conn) {
+    $sql = "UPDATE Stations SET title='" . $name . "'where id=". $id;
+    return ($conn->query($sql) === TRUE);
+}
+
+//now we run thru inserting new things.
+/**
+ * @param $id
+ * @param $name
+ * @param PDO $conn
+ * @return bool
+ */
+function addCommodity($id, $name, $conn) {
+    $updatedAt = date("Y-m-d | h:i:sa"); //this will be used to set updated_at
+    $createdAt = date("Y-m-d | h:i:sa"); //this will be used to set created_at
+    $sql = "INSERT INTO Commodities (id, title) VALUES ($id, $name)";
     return ($conn->query($sql) === TRUE);
 }
 
@@ -141,22 +198,35 @@ function addFaction($factionId, $name, $conn) {
     return ($conn->query($sql) === TRUE);
 }
 
+/**
+ * @param $id
+ * @param $name
+ * @param PDO $conn
+ * @return bool
+ */
 function addStore($id, $name, $conn) {
     $sql = "INSERT INTO  Stores (id,title) VALUES ($id, $name)";
     return ($conn->query($sql) === TRUE);
 }
 
+/**
+ * @param $id
+ * @param $factionId
+ * @param $name
+ * @param PDO $conn
+ * @return bool
+ */
 function addStation($id, $factionId, $name, $conn) {
     $sql = "INSERT INTO Stations (id, faction_id, title) VALUES ($id, $factionId, $name)";
     return ($conn->query($sql) === TRUE);
 }
 
 
-//now we will put helper functions to the main  update and insert functions
+//now we will put helper functions.  Not things that are modifing the database but checking it or workign with the data before it's displayed or put into the db.
 /**
  * @param $table
  * @param $id
- * @param $conn
+ * @param PDO $conn
  * @return bool
  */
 function doesItExist($table, $id, $conn) {
@@ -176,14 +246,16 @@ function sanitizeInput($value) {
  * @return bool
  */
 function isValidRequestedType() {
-    $allowedDataTypes = ['commodity', 'faction', 'station', 'store'];
-    if(empty($_POST['dataType'])) {
-        //they didn't send a dataType so we can't do anything with it...
+    $dataType = (! empty($_POST['DataType'])) ? $_POST['DataType'] : null;
+    $allowedDataTypes = ['1'];
+    if(is_null($dataType)) {
+        //406 is "Not Acceptable" they didn't send a dataType so we can't do anything...
         http_response_code(406);
         
         return false;
     }
-    elseif(! in_array($_POST['dataType'], $allowedDataTypes)) {
+    elseif(! in_array($dataType, $allowedDataTypes)) {
+        //501 means "Not Implemented"  so we are saying the datatype they asked for isn't implemented
         http_response_code(501);
         
         return false;
