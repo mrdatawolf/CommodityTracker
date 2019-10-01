@@ -1,0 +1,5 @@
+name: Econ API
+type: module
+description: Custom RESTful API module with GET/POST/PUT/DELETE etc.. method.
+author: MrDataWolf
+core: 8.x
