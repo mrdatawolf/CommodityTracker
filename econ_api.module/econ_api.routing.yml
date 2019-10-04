@@ -1,29 +1,30 @@
 # Test API endpoints
 
-test_api.get:
-  path: 'econ-api/get.json'
+econ_api.get:
+  path: 'econ-api/get'
   defaults: { _controller: '\Drupal\econ_api\Controller\EconAPIController::get_econ' }
   methods:  [GET]
   requirements:
     _access: 'TRUE'
 
-test_api.put:
-  path: 'econ-api/put.json'
+econ_api.put:
+  path: 'econ-api/put'
   defaults: { _controller: '\Drupal\econ_api\Controller\EconAPIController::put_econ' }
   methods:  [PUT]
   requirements:
     _access: 'TRUE'
 
-test_api.post:
-  path: 'econ-api/post.json'
+econ_api.post:
+  path: 'econ-api/post'
   defaults: { _controller: '\Drupal\econ_api\Controller\EconAPIController::post_econ' }
   methods:  [POST]
   requirements:
     _access: 'TRUE'
 
-test_api.delete:
-  path: 'econ-api/delete.json'
+econ_api.delete:
+  path: 'econ-api/delete'
   defaults: { _controller: '\Drupal\econ_api\Controller\EconAPIController::delete_econ' }
   methods:  [DELETE]
   requirements:
     _access: 'TRUE'
+

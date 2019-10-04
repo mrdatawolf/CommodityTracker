@@ -1,0 +1,119 @@
+<?php
+
+
+/**
+ * Implements hook_schema().
+ * This will define the tables the module uses
+ */
+function econ_api_schema() {
+    $schema['Commodities'] = [
+        'description' => 'Stores the name of each commodity we track and its unique identifier.',
+        'fields' => [
+            'id' => [
+                'type'          => 'int',
+                'description'   => 'ID from SE for the commodity'
+            ],
+            'title' => [
+                'type'          => 'varchar',
+                'length'        => 255,
+                'description'   => 'Name of the commodity'
+            ]
+        ]
+    ];
+    $schema['Stations'] = [
+        'description' => 'Stores the name of each station we track and its unique identifier.',
+        'fields' => [
+            'id' => [
+                'type'          => 'int',
+                'description'   => 'ID from SE for the station'
+            ],
+            'faction_id' => [
+                'type'          => 'int',
+                'description'   => 'ID from SE for the faction'
+            ],
+            'title' => [
+                'type'          => 'varchar',
+                'length'        => 255,
+                'description'   => 'Name of the station'
+            ],
+            'gridName' => [
+                'type'          => 'varchar',
+                                'length'        => 255,
+                                'description'   => 'Name of the grid'
+            ],
+            'x' => [
+                'type'          => 'int',
+                'description'   => 'x from SE for the station'
+            ],
+            'y' => [
+                'type'          => 'int',
+                'description'   => 'y from SE for the station'
+            ],
+            'z' => [
+                'type'          => 'int',
+                'description'   => 'z from SE for the station'
+            ],
+        ]
+    ];
+    $schema['Factions'] = [
+        'description' => 'Stores the name of each faction we track and its unique identifier.',
+        'fields' => [
+            'id' => [
+                'type'          => 'int',
+                'description'   => 'ID from SE for the faction'
+            ],
+            'title' => [
+                'type'          => 'varchar',
+                'length'        => 255,
+                'description'   => 'Name of the faction'
+            ]
+        ]
+    ];
+    $schema['Stores'] = [
+        'description' => 'Holds the name of each store we track and its unique identifier.',
+        'fields' => [
+            'id' => [
+                'type'          => 'int',
+                'description'   => 'ID from SE for the store'
+            ],
+            'title' => [
+                'type'          => 'varchar',
+                'length'        => 255,
+                'description'   => 'Name of the store'
+            ]
+        ]
+    ];
+    $schema['Servers'] = [
+        'description' => 'Holds the name of each server we track and its unique identifier.',
+        'fields' => [
+            'id' => [
+                'type'          => 'int',
+                'description'   => 'ID from SE for the server'
+            ],
+            'title' => [
+                'type'          => 'varchar',
+                'length'        => 255,
+                'description'   => 'Name of the server'
+            ]
+        ]
+    ];
+    $schema['Commodities_Data'] = [
+        'description' => 'Stores the values for a given commodity at a given poiint in time.',
+        'fields' => [
+            'commodity_id'  => [ 'type' =>'int'],
+            'station_id'    => [ 'type' =>'int'],
+            'faction_id'    => [ 'type' =>'int'],
+            'store_id'      => [ 'type' =>'int'],
+            'server_id'     => [ 'type' =>'int'],
+            'amount'        => [ 'type' =>'float'],
+            'price'         => [ 'type' =>'float'],
+            'created_at'    => [ 'type' =>'text'],
+            'updated_at'    => [ 'type' =>'text']
+        ]
+    ];
+	//this is a test
+
+    return $schema;
+}
+
+?>
