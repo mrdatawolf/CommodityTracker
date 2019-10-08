@@ -37,6 +37,7 @@ This will require the torch econ plugin.  But it's still in early alpha
     * Lots of DB changes. Added a common php file and made the SQL connection use PDO so we can use sqlite/mysql whatever as we work. fleshed out more of the update code.  Also started workign on dispaying data from the DB to the users.
 *.0.0.7
     * New logo and some cleanup in images
+*.0.0.8 Brgan implementing a Drupal custom entities storage solution for the data we are gathering.
 
 ## Meta
 
