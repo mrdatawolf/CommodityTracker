@@ -11,6 +11,7 @@ function econ_api_schema() {
         'fields' => [
             'id' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'ID from SE for the commodity'
             ],
             'title' => [
@@ -25,10 +26,12 @@ function econ_api_schema() {
         'fields' => [
             'id' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'ID from SE for the station'
             ],
             'faction_id' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'ID from SE for the faction'
             ],
             'title' => [
@@ -43,14 +46,17 @@ function econ_api_schema() {
             ],
             'x' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'x from SE for the station'
             ],
             'y' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'y from SE for the station'
             ],
             'z' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'z from SE for the station'
             ],
         ]
@@ -60,6 +66,7 @@ function econ_api_schema() {
         'fields' => [
             'id' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'ID from SE for the faction'
             ],
             'title' => [
@@ -74,6 +81,7 @@ function econ_api_schema() {
         'fields' => [
             'id' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'ID from SE for the store'
             ],
             'title' => [
@@ -88,6 +96,7 @@ function econ_api_schema() {
         'fields' => [
             'id' => [
                 'type'          => 'int',
+                'size'          => 'big',
                 'description'   => 'ID from SE for the server'
             ],
             'title' => [
@@ -100,11 +109,11 @@ function econ_api_schema() {
     $schema['Commodities_Data'] = [
         'description' => 'Stores the values for a given commodity at a given poiint in time.',
         'fields' => [
-            'commodity_id'  => [ 'type' =>'int'],
-            'station_id'    => [ 'type' =>'int'],
-            'faction_id'    => [ 'type' =>'int'],
-            'store_id'      => [ 'type' =>'int'],
-            'server_id'     => [ 'type' =>'int'],
+            'commodity_id'  => [ 'type' =>'int', 'size' => 'big'],
+            'station_id'    => [ 'type' =>'int', 'size' => 'big'],
+            'faction_id'    => [ 'type' =>'int', 'size' => 'big'],
+            'store_id'      => [ 'type' =>'int', 'size' => 'big'],
+            'server_id'     => [ 'type' =>'int', 'size' => 'big'],
             'amount'        => [ 'type' =>'float'],
             'price'         => [ 'type' =>'float'],
             'created_at'    => [ 'type' =>'text'],

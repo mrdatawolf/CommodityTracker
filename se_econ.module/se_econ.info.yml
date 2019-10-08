@@ -1,0 +1,8 @@
+name: Econ Interface
+type: module
+package: Economy
+description: Custom displays for SE Econ data.
+author: MrDataWolf
+core: 8.x
+
+php: 7.0

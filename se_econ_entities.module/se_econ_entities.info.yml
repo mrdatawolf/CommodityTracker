@@ -1,0 +1,10 @@
+name: SE Economy Entities
+type: module
+package: Economy
+description: 'Custom Entities SE Econ data.'
+author: MrDataWolf
+core: 8.x
+dependencies:
+  - options
+  - entity_reference
+php: 7.0

@@ -1,0 +1,15 @@
+# Test API endpoints
+
+se_econ.get:
+  path: 'economy/get'
+  defaults: { _controller: '\Drupal\se_econ\Controller\SEEconController::get_econ' }
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+se_econ.post:
+  path: 'economy/post'
+  defaults: { _controller: '\Drupal\se_econ\Controller\SEEconController::post_econ' }
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'

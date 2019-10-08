@@ -1,0 +1,47 @@
+view station entity:
+  title: 'View Station entity'
+add station entity:
+  title: 'Add Station entity'
+edit station entity:
+  title: 'Edit Station entity'
+delete station entity:
+  title: 'Delete Station entity'
+administer station entity:
+  title: 'Administer Station entity'
+  restrict access: TRUE
+
+view faction entity:
+  title: 'View Faction entity'
+add faction entity:
+  title: 'Add Faction entity'
+edit faction entity:
+  title: 'Edit Faction entity'
+delete faction entity:
+  title: 'Delete Faction entity'
+administer faction entity:
+  title: 'Administer Faction entity'
+  restrict access: TRUE
+  
+view server entity:
+  title: 'View Server entity'
+add server entity:
+  title: 'Add Server entity'
+edit server entity:
+  title: 'Edit Server entity'
+delete server entity:
+  title: 'Delete Server entity'
+administer server entity:
+  title: 'Administer Server entity'
+  restrict access: TRUE
+
+view commodity entity:
+  title: 'View Commodity entity'
+add commodity entity:
+  title: 'Add Commodity entity'
+edit commodity entity:
+  title: 'Edit Commodity entity'
+delete commodity entity:
+  title: 'Delete Commodity entity'
+administer commodity entity:
+  title: 'Administer Commodity entity'
+  restrict access: TRUE

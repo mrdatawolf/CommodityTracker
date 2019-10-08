@@ -12,11 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
-* Controller routines for test_api routes.
+* Controller routines for econ_api routes.
 */
 class EconAPIController extends ControllerBase {
 
     private $data, $createdAt, $updatedAt;
+    /**
+     * @var Array
+     */
+    private  $response;
 
 
     /**
@@ -29,21 +33,22 @@ class EconAPIController extends ControllerBase {
         $this->data['dataType'] = (empty($data['dataType'])) ? null : $this->sanitizeInput($data['dataType']);
         if ($this->isValidRequestedType()) {
           $this->parseData($data);
-          $commodities = $this->getCommodities(1);
+            //here we should allow filtering where we look for $data['fields'] sanatize it and then limit the respose to data from those fields
+            //Also we should allow them to add other limiting data like commodity_id=11224122143412,updated_after=2019/10/03
+          $commodities = $this->getCommodities(1, 2000);
          
           $rows = $this->formatCommodityData($commodities);
   
   
-          $response['data'] = $rows;
-          $response['method'] = 'GET';
-  
-          return new JsonResponse( $response );
+          $this->response['data'] = $rows;
+          $this->response['method'] = 'GET';
         } else {
-          $response['data'] = [];
-          $response['method'] = 'GET';
+          $this->response['data'] = [];
+          $this->response['method'] = 'GET';
           http_response_code(501);
-          return new JsonResponse( $response );
         }
+    
+        return new JsonResponse( $this->response );
     }
 
     /**
@@ -52,10 +57,10 @@ class EconAPIController extends ControllerBase {
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function put_econ( Request $request ) {
-        $response['data'] = 'Some test data to return';
-        $response['method'] = 'PUT';
+        $this->response['data'] = 'Some test data to return';
+        $this->response['method'] = 'PUT';
 
-        return new JsonResponse( $response );
+        return new JsonResponse( $this->response );
     }
 
 
@@ -66,34 +71,40 @@ class EconAPIController extends ControllerBase {
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function post_econ( Request $request ) {
+        if(empty($this->response)) {
+            $this->response['data'] = [];
+        }
       //now we take what we think is fleshed out and ready to go data and work with it.
       $data = $request->query->all();
       $this->data['dataType'] = (empty($data['dataType'])) ? null : $this->sanitizeInput($data['dataType']);
       if ($this->isValidRequestedType()) {
         switch ($this->data['dataType']) {
           case ('1') :
-            $this->parseData($data);
-            $this->upsertFaction();
-            $this->upsertStation();
-            $this->upsertStore();
+            $parseResult = $this->parseData($data);
+            $this->response['data']['parse'] = $parseResult;
+            $factionResult =  $this->upsertFaction();
+            $this->response['data']['faction'] = $factionResult;
+            $stationResult = $this->upsertStation();
+            $this->response['data']['station'] = $stationResult;
+            $storeResult = $this->upsertStore();
+            $this->response['data']['store'] = $storeResult;
             //we are going to upsert based on the data we receive
-            $this->upsertCommodity();
+            $commodityResult = $this->upsertCommodity();
+            $this->response['data']['commodity'] = $commodityResult;
+            $this->response['data'][] = 'OK';
             break;
           //more cases as needed
           default :
-            return null;
+            $this->response['data'][] ="unknown data type";
+            http_response_code(501);
         }
-  
-        $response['data'] = 'OK';
-        $response['method'] = 'POST';
-  
-        return new JsonResponse($response);
       } else {
-        $response['data'] = [];
-        $response['method'] = 'GET';
+        $this->response['data'][] = "invalid request";
         http_response_code(501);
-        return new JsonResponse( $response );
       }
+      
+        $this->response['method'] = 'POST';
+        return new JsonResponse($this->response);
     }
 
     /**
@@ -101,16 +112,17 @@ class EconAPIController extends ControllerBase {
     */
     public function delete_econ( Request $request ) {
 
-        $response['data'] = 'Some test data to return';
-        $response['method'] = 'DELETE';
+        $this->response['data'] = 'Some test data to return';
+        $this->response['method'] = 'DELETE';
 
-        return new JsonResponse( $response );
+        return new JsonResponse( $this->response );
     }
-  
-  /**
-   * @param $data
-   * adds the given data into class global $data (assuming we care about it...
-   */
+    
+    /**
+     * @param $data
+     *  adds the given data into class global $data (assuming we care about it)...
+     * @return bool
+     */
     public function parseData($data)
     {
       $this->updatedAt = date("Y-m-d | h:i:sa"); //this will be used to set updated_at
@@ -118,7 +130,6 @@ class EconAPIController extends ControllerBase {
         //gather the data we want and sanitize it
         $this->data['dataType']     = $this->sanitizeInput($data['dataType']);
         if ($this->isValidRequestedType()) {
-            $this->data['dataType']     = $this->sanitizeInput($data['dataType']);
             $this->data['whatToWorkOn'] = $this->sanitizeInput($data['dataType']);
             $this->data['storeId']      = 1;
             $this->data['storeName']      = "Default";
@@ -136,7 +147,11 @@ class EconAPIController extends ControllerBase {
             $this->data['location']['X']    = (empty($data['lx']))  ? null : $this->sanitizeInput($data['lx']);
             $this->data['location']['Y']    = (empty($data['ly']))  ? null : $this->sanitizeInput($data['ly']);
             $this->data['location']['Z']    = (empty($data['lz']))  ? null : $this->sanitizeInput($data['lz']);
+            
+            return true;
         }
+        
+        return false;
     }
 
 //now we do the code for adding and updating records
@@ -205,8 +220,12 @@ class EconAPIController extends ControllerBase {
           $this->updateCommodity();
         }
         
-        $this->upsertCommodityData();
+        $commodityDataResult = $this->upsertCommodityData();
+          $this->response['data']['commodityData'] = $commodityDataResult;
+        return true;
       }
+      
+      return false;
     }
     
     private function upsertCommodityData() {
@@ -371,12 +390,13 @@ class EconAPIController extends ControllerBase {
     }
 
     /**
-     * @param $serverId
+     * @param int $serverId
+     * @param int $maximumToDisplay
      * @return array
      */
-    function getCommodities($serverId) {
+    function getCommodities($serverId, $maximumToDisplay = 500) {
         $commodityArray = [];
-        $commoditiesSelect = "SELECT * FROM {Commodities}";
+        $commoditiesSelect = "SELECT * FROM {Commodities} LIMIT " . $maximumToDisplay;
         foreach(\Drupal::database()->query($commoditiesSelect) as $row) {
             $commodityArray[$row->id]   = [
                 'name' => $row->title,

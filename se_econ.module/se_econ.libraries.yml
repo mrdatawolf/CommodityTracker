@@ -1,0 +1,11 @@
+se-econ:
+  version: 1.x
+  css:
+    layout:
+      css/se-econ-layout.css: {}
+    theme:
+      css/se-econ-theme.css: {}
+  js:
+    js/se-econ.js: {}
+  dependencies:
+  - core/jquery
