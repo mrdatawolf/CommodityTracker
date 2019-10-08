@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * SE Econ module.
+ */
+
+/*
+ *
+ */
+function se_econ_theme($existing, $type, $theme, $path) {
+    return [
+        'economy_table' => [
+            'variables' => ['rows' => []],
+            'template'  => 'economy-table'
+        ],
+    ];
+}
+
+function se_econ_element_info_alter(array &$types) {
+    if (isset($types['table'])) {
+      $types['table']['#attached']['library'][] = 'se_econ/se-econ';
+    }
+  }

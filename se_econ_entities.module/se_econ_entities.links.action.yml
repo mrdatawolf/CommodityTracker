@@ -1,0 +1,37 @@
+# All action links for this module
+
+se_econ_entities_station.station_add:
+  # Which route will be called by the link
+  route_name: se_econ_entities.station_add
+  title: 'Add Station'
+  # Where will the link appear, defined by route name.
+  appears_on:
+    - entity.se_econ_entities_station.collection
+    - entity.se_econ_entities_station.canonical
+    -
+se_econ_entities_station.faction_add:
+  # Which route will be called by the link
+  route_name: se_econ_entities.faction_add
+  title: 'Add Faction'
+  # Where will the link appear, defined by route name.
+  appears_on:
+    - entity.se_econ_entities_faction.collection
+    - entity.se_econ_entities_faction.canonical
+
+se_econ_entities_server.server_add:
+  # Which route will be called by the link
+  route_name: se_econ_entities.server_add
+  title: 'Add Server'
+  # Where will the link appear, defined by route name.
+  appears_on:
+    - entity.se_econ_entities_server.collection
+    - entity.se_econ_entities_server.canonical
+    -
+se_econ_entities_commodity.commodity_add:
+  # Which route will be called by the link
+  route_name: se_econ_entities.commodity_add
+  title: 'Add Commodity'
+  # Where will the link appear, defined by route name.
+  appears_on:
+    - entity.se_econ_entities_commodity.collection
+    - entity.se_econ_entities_commodity.canonical

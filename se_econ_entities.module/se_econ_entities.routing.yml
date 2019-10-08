@@ -1,0 +1,226 @@
+# This file brings everything together. Very nifty!
+
+# Route name can be used in several places; e.g. links, redirects, and local
+# actions.
+entity.se_econ_entities_station.canonical:
+  path: '/se_econ_entities_station/{se_econ_entities_station}'
+  defaults:
+    # Calls the view controller, defined in the annotation of the station entity
+    _entity_view: 'se_econ_entities_station'
+    _title: 'Station Content'
+  requirements:
+    # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'se_econ_entities_station.view'
+
+entity.se_econ_entities_station.collection:
+  path: '/se_econ_entities_station/list'
+  defaults:
+    # Calls the list controller, defined in the annotation of the station entity.
+    _entity_list: 'se_econ_entities_station'
+    _title: 'Station List'
+  requirements:
+    # Checks for permission directly.
+    _permission: 'administer station entity'
+
+station_entity_example.station_add:
+  path: '/se_econ_entities_station/add'
+  defaults:
+    # Calls the form.add controller, defined in the station entity.
+    _entity_form: se_econ_entities_station.add
+    _title: 'Add Station'
+  requirements:
+    _entity_create_access: 'se_econ_entities_station'
+
+entity.se_econ_entities_station.edit_form:
+  path: '/se_econ_entities_station/{se_econ_entities_station}/edit'
+  defaults:
+    # Calls the form.edit controller, defined in the station entity.
+    _entity_form: se_econ_entities_station.edit
+    _title: 'Edit Station'
+  requirements:
+    _entity_access: 'se_econ_entities_station.edit'
+
+entity.se_econ_entities_station.delete_form:
+  path: '/station/{se_econ_entities_station}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the station entity.
+    _entity_form: se_econ_entities_station.delete
+    _title: 'Delete Station'
+  requirements:
+    _entity_access: 'se_econ_entities_station.delete'
+
+se_econ_entities.station_settings:
+  path: 'admin/structure/se_econ_entities_station_settings'
+  defaults:
+    _form: '\Drupal\se_econ_entities\Form\StationSettingsForm'
+    _title: 'Station Settings'
+  requirements:
+    _permission: 'administer station entity'
+    
+
+entity.se_econ_entities_faction.canonical:
+  path: '/se_econ_entities_faction/{se_econ_entities_faction}'
+  defaults:
+    # Calls the view controller, defined in the annotation of the faction entity
+    _entity_view: 'se_econ_entities_faction'
+    _title: 'Faction Content'
+  requirements:
+    # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'se_econ_entities_faction.view'
+
+entity.se_econ_entities_faction.collection:
+  path: '/se_econ_entities_faction/list'
+  defaults:
+    # Calls the list controller, defined in the annotation of the faction entity.
+    _entity_list: 'se_econ_entities_faction'
+    _title: 'Faction List'
+  requirements:
+    # Checks for permission directly.
+    _permission: 'administer faction entity'
+
+faction_entity_example.faction_add:
+  path: '/se_econ_entities_faction/add'
+  defaults:
+    # Calls the form.add controller, defined in the faction entity.
+    _entity_form: se_econ_entities_faction.add
+    _title: 'Add Faction'
+  requirements:
+    _entity_create_access: 'se_econ_entities_faction'
+
+entity.se_econ_entities_faction.edit_form:
+  path: '/se_econ_entities_faction/{se_econ_entities_faction}/edit'
+  defaults:
+    # Calls the form.edit controller, defined in the faction entity.
+    _entity_form: se_econ_entities_faction.edit
+    _title: 'Edit Faction'
+  requirements:
+    _entity_access: 'se_econ_entities_faction.edit'
+
+entity.se_econ_entities_faction.delete_form:
+  path: '/faction/{se_econ_entities_faction}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the faction entity.
+    _entity_form: se_econ_entities_faction.delete
+    _title: 'Delete Faction'
+  requirements:
+    _entity_access: 'se_econ_entities_faction.delete'
+
+se_econ_entities.faction_settings:
+  path: 'admin/structure/se_econ_entities_faction_settings'
+  defaults:
+    _form: '\Drupal\se_econ_entities\Form\FactionSettingsForm'
+    _title: 'Faction Settings'
+  requirements:
+    _permission: 'administer faction entity'
+
+
+entity.se_econ_entities_server.canonical:
+  path: '/se_econ_entities_server/{se_econ_entities_server}'
+  defaults:
+    # Calls the view controller, defined in the annotation of the server entity
+    _entity_view: 'se_econ_entities_server'
+    _title: 'Server Content'
+  requirements:
+    # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'se_econ_entities_server.view'
+
+entity.se_econ_entities_server.collection:
+  path: '/se_econ_entities_server/list'
+  defaults:
+    # Calls the list controller, defined in the annotation of the server entity.
+    _entity_list: 'se_econ_entities_server'
+    _title: 'Server List'
+  requirements:
+    # Checks for permission directly.
+    _permission: 'administer server entity'
+
+server_entity_example.server_add:
+  path: '/se_econ_entities_server/add'
+  defaults:
+    # Calls the form.add controller, defined in the server entity.
+    _entity_form: se_econ_entities_server.add
+    _title: 'Add Server'
+  requirements:
+    _entity_create_access: 'se_econ_entities_server'
+
+entity.se_econ_entities_server.edit_form:
+  path: '/se_econ_entities_server/{se_econ_entities_server}/edit'
+  defaults:
+    # Calls the form.edit controller, defined in the server entity.
+    _entity_form: se_econ_entities_server.edit
+    _title: 'Edit Server'
+  requirements:
+    _entity_access: 'se_econ_entities_server.edit'
+
+entity.se_econ_entities_server.delete_form:
+  path: '/server/{se_econ_entities_server}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the server entity.
+    _entity_form: se_econ_entities_server.delete
+    _title: 'Delete Server'
+  requirements:
+    _entity_access: 'se_econ_entities_server.delete'
+
+se_econ_entities.server_settings:
+  path: 'admin/structure/se_econ_entities_server_settings'
+  defaults:
+    _form: '\Drupal\se_econ_entities\Form\ServerSettingsForm'
+    _title: 'Server Settings'
+  requirements:
+    _permission: 'administer server entity'
+
+
+entity.se_econ_entities_commodity.canonical:
+  path: '/se_econ_entities_commodity/{se_econ_entities_commodity}'
+  defaults:
+    # Calls the view controller, defined in the annotation of the commodity entity
+    _entity_view: 'se_econ_entities_commodity'
+    _title: 'Commodity Content'
+  requirements:
+    # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'se_econ_entities_commodity.view'
+
+entity.se_econ_entities_commodity.collection:
+  path: '/se_econ_entities_commodity/list'
+  defaults:
+    # Calls the list controller, defined in the annotation of the commodity entity.
+    _entity_list: 'se_econ_entities_commodity'
+    _title: 'Commodity List'
+  requirements:
+    # Checks for permission directly.
+    _permission: 'administer commodity entity'
+
+commodity_entity_example.commodity_add:
+  path: '/se_econ_entities_commodity/add'
+  defaults:
+    # Calls the form.add controller, defined in the commodity entity.
+    _entity_form: se_econ_entities_commodity.add
+    _title: 'Add Commodity'
+  requirements:
+    _entity_create_access: 'se_econ_entities_commodity'
+
+entity.se_econ_entities_commodity.edit_form:
+  path: '/se_econ_entities_commodity/{se_econ_entities_commodity}/edit'
+  defaults:
+    # Calls the form.edit controller, defined in the commodity entity.
+    _entity_form: se_econ_entities_commodity.edit
+    _title: 'Edit Commodity'
+  requirements:
+    _entity_access: 'se_econ_entities_commodity.edit'
+
+entity.se_econ_entities_commodity.delete_form:
+  path: '/commodity/{se_econ_entities_commodity}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the commodity entity.
+    _entity_form: se_econ_entities_commodity.delete
+    _title: 'Delete Commodity'
+  requirements:
+    _entity_access: 'se_econ_entities_commodity.delete'
+
+se_econ_entities.commodity_settings:
+  path: 'admin/structure/se_econ_entities_commodity_settings'
+  defaults:
+    _form: '\Drupal\se_econ_entities\Form\CommoditySettingsForm'
+    _title: 'Commodity Settings'
+  requirements:
+    _permission: 'administer commodity entity'

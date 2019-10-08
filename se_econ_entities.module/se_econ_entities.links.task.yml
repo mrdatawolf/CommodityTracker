@@ -1,0 +1,88 @@
+# Define the 'local' links for the module
+
+station.settings_tab:
+  route_name: se_econ_entities.station_settings
+  title: Settings
+  base_route: se_econ_entities.station_settings
+
+station.view:
+  route_name: entity.se_econ_entities_station.canonical
+  base_route: entity.se_econ_entities_station.canonical
+  title: View
+
+station.page_edit:
+  route_name: entity.se_econ_entities_station.edit_form
+  base_route: entity.se_econ_entities_station.canonical
+  title: Edit
+
+station.delete_confirm:
+  route_name:  entity.se_econ_entities_station.delete_form
+  base_route:  entity.se_econ_entities_station.canonical
+  title: Delete
+  weight: 10
+
+
+faction.settings_tab:
+  route_name: se_econ_entities.faction_settings
+  title: Settings
+  base_route: se_econ_entities.faction_settings
+
+faction.view:
+  route_name: entity.se_econ_entities_faction.canonical
+  base_route: entity.se_econ_entities_faction.canonical
+  title: View
+
+faction.page_edit:
+  route_name: entity.se_econ_entities_faction.edit_form
+  base_route: entity.se_econ_entities_faction.canonical
+  title: Edit
+
+faction.delete_confirm:
+  route_name:  entity.se_econ_entities_faction.delete_form
+  base_route:  entity.se_econ_entities_faction.canonical
+  title: Delete
+    weight: 10
+    
+
+server.settings_tab:
+  route_name: se_econ_entities.server_settings
+  title: Settings
+  base_route: se_econ_entities.server_settings
+
+server.view:
+  route_name: entity.se_econ_entities_server.canonical
+  base_route: entity.se_econ_entities_server.canonical
+  title: View
+
+server.page_edit:
+  route_name: entity.se_econ_entities_server.edit_form
+  base_route: entity.se_econ_entities_server.canonical
+  title: Edit
+
+server.delete_confirm:
+  route_name:  entity.se_econ_entities_server.delete_form
+  base_route:  entity.se_econ_entities_server.canonical
+  title: Delete
+  weight: 10
+
+
+commodity.settings_tab:
+  route_name: se_econ_entities.commodity_settings
+  title: Settings
+  base_route: se_econ_entities.commodity_settings
+
+commodity.view:
+  route_name: entity.se_econ_entities_commodity.canonical
+  base_route: entity.se_econ_entities_commodity.canonical
+  title: View
+
+commodity.page_edit:
+  route_name: entity.se_econ_entities_commodity.edit_form
+  base_route: entity.se_econ_entities_commodity.canonical
+  title: Edit
+
+commodity.delete_confirm:
+  route_name:  entity.se_econ_entities_commodity.delete_form
+  base_route:  entity.se_econ_entities_commodity.canonical
+  title: Delete
+    weight: 10

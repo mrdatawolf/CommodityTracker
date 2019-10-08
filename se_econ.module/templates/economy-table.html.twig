@@ -1,0 +1,18 @@
+<table>
+    <thead>
+    <tr>
+        {% for name in rows|first|keys %}
+        <th style="padding-left: 1em;">{{ name }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            {% for data in row %}
+            <td  style="padding-left: 1em;">{{ data }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
