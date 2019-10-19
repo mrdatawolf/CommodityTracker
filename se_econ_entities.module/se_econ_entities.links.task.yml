@@ -41,7 +41,7 @@ faction.delete_confirm:
   route_name:  entity.se_econ_entities_faction.delete_form
   base_route:  entity.se_econ_entities_faction.canonical
   title: Delete
-    weight: 10
+  weight: 10
     
 
 server.settings_tab:
@@ -85,4 +85,4 @@ commodity.delete_confirm:
   route_name:  entity.se_econ_entities_commodity.delete_form
   base_route:  entity.se_econ_entities_commodity.canonical
   title: Delete
-    weight: 10
+  weight: 10
