@@ -24,7 +24,7 @@ class ServerListBuilder extends EntityListBuilder {
         $build['description'] = [
             '#markup' => $this->t('Content Entity Example implements a Servers model. These sactions are fieldable entities. You can manage the fields on the <a href="@adminlink">Servers admin page</a>.', array(
                 '@adminlink' => \Drupal::urlGenerator()
-                    ->generateFromRoute('se_econ_entities.saction_settings'),
+                    ->generateFromRoute('se_econ_entities.server_settings'),
             )),
         ];
         
@@ -35,7 +35,7 @@ class ServerListBuilder extends EntityListBuilder {
     /**
      * {@inheritdoc}
      *
-     * Building the header and content lines for the saction list.
+     * Building the header and content lines for the server list.
      *
      * Calling the parent::buildHeader() adds a column for the possible actions
      * and inserts the 'edit' and 'delete' links as defined for the entity type.

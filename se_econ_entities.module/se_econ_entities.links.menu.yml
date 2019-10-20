@@ -8,7 +8,7 @@ entity.se_econ_entities_station.collection:
 se_econ_entities_station.admin.structure.settings:
   title: Station Settings
   description: 'Configure Station entity'
-  route_name:  se_econ_entities_station.station_settings
+  route_name: se_econ_entities_station.station_settings
   parent: system.admin_structure
 
 entity.se_econ_entities_faction.collection:
@@ -19,27 +19,27 @@ entity.se_econ_entities_faction.collection:
 se_econ_entities_faction.admin.structure.settings:
   title: Faction Settings
   description: 'Configure Faction entity'
-  route_name:  se_econ_entities_faction.faction_settings
+  route_name: se_econ_entities_faction.faction_settings
   parent: system.admin_structure
 
-  entity.se_econ_entities_server.collection:
-    title: 'Server Entity: Servers Listing'
-    route_name: entity.se_econ_entities_server_server.collection
-    description: 'List Servers'
-    weight: 10
-  se_econ_entities_station.admin.structure.settings:
-    title: Server Settings
-    description: 'Configure Server entity'
-    route_name:  se_econ_entities_server.server_settings
-    parent: system.admin_structure
+entity.se_econ_entities_server.collection:
+  title: 'Server Entity: Servers Listing'
+  route_name: entity.se_econ_entities_server_server.collection
+  description: 'List Servers'
+  weight: 10
+se_econ_entities_server.admin.structure.settings:
+  title: Server Settings
+  description: 'Configure Server entity'
+  route_name: se_econ_entities_server.server_settings
+  parent: system.admin_structure
 
-  entity.se_econ_entities_commodity.collection:
-    title: 'Station Entity: Commodity Listing'
-    route_name: entity.se_econ_entities_commodity_faction.collection
-    description: 'List Commodities'
-    weight: 10
-  se_econ_entities_commodity.admin.structure.settings:
-    title: Commodity Settings
-    description: 'Configure Commodity entity'
-    route_name:  se_econ_entities_commodity.commodity_settings
-    parent: system.admin_structure
+entity.se_econ_entities_commodity.collection:
+  title: 'Station Entity: Commodity Listing'
+  route_name: entity.se_econ_entities_commodity_faction.collection
+  description: 'List Commodities'
+  weight: 10
+se_econ_entities_commodity.admin.structure.settings:
+  title: Commodity Settings
+  description: 'Configure Commodity entity'
+  route_name: se_econ_entities_commodity.commodity_settings
+  parent: system.admin_structure

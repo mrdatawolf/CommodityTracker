@@ -70,18 +70,18 @@ use Drupal\user\UserInterface;
  * is read and cached. Don't forget to clear cache after changes.
  *
  * @ContentEntityType(
- *   id = "content_entity_example_Commodity",
+ *   id = "content_entity_Commodity",
  *   label = @Translation("Commodity entity"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\content_entity_example\Entity\Controller\CommodityListBuilder",
+ *     "list_builder" = "Drupal\content_entity\Entity\Controller\CommodityListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
- *       "add" = "Drupal\content_entity_example\Form\CommodityForm",
- *       "edit" = "Drupal\content_entity_example\Form\CommodityForm",
- *       "delete" = "Drupal\content_entity_example\Form\CommodityDeleteForm",
+ *       "add" = "Drupal\content_entity\Form\CommodityForm",
+ *       "edit" = "Drupal\content_entity\Form\CommodityForm",
+ *       "delete" = "Drupal\content_entity\Form\CommodityDeleteForm",
  *     },
- *     "access" = "Drupal\content_entity_example\CommodityAccessControlHandler",
+ *     "access" = "Drupal\content_entity\CommodityAccessControlHandler",
  *   },
  *   base_table = "Commodity",
  *   admin_permission = "administer Commodity entity",

@@ -22,9 +22,9 @@ class CommodityListBuilder extends EntityListBuilder {
      */
     public function render() {
         $build['description'] = [
-            '#markup' => $this->t('Content Entity Example implements a Commodities model. These sactions are fieldable entities. You can manage the fields on the <a href="@adminlink">Commodities admin page</a>.', array(
+            '#markup' => $this->t('Content Entity Example implements a Commodities model. These sections are fieldable entities. You can manage the fields on the <a href="@adminlink">Commodities admin page</a>.', array(
                 '@adminlink' => \Drupal::urlGenerator()
-                    ->generateFromRoute('se_econ_entities.saction_settings'),
+                    ->generateFromRoute('se_econ_entities.commodity_settings'),
             )),
         ];
         
@@ -35,7 +35,7 @@ class CommodityListBuilder extends EntityListBuilder {
     /**
      * {@inheritdoc}
      *
-     * Building the header and content lines for the saction list.
+     * Building the header and content lines for the commodity list.
      *
      * Calling the parent::buildHeader() adds a column for the possible actions
      * and inserts the 'edit' and 'delete' links as defined for the entity type.

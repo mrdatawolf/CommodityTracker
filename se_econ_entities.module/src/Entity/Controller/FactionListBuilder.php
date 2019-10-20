@@ -24,7 +24,7 @@ class FactionListBuilder extends EntityListBuilder {
         $build['description'] = [
             '#markup' => $this->t('Content Entity Example implements a Factions model. These sactions are fieldable entities. You can manage the fields on the <a href="@adminlink">Factions admin page</a>.', array(
                 '@adminlink' => \Drupal::urlGenerator()
-                    ->generateFromRoute('se_econ_entities.saction_settings'),
+                    ->generateFromRoute('se_econ_entities.faction_settings'),
             )),
         ];
         
@@ -35,7 +35,7 @@ class FactionListBuilder extends EntityListBuilder {
     /**
      * {@inheritdoc}
      *
-     * Building the header and content lines for the saction list.
+     * Building the header and content lines for the faction list.
      *
      * Calling the parent::buildHeader() adds a column for the possible actions
      * and inserts the 'edit' and 'delete' links as defined for the entity type.

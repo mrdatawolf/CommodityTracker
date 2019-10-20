@@ -22,7 +22,7 @@ entity.se_econ_entities_station.collection:
     # Checks for permission directly.
     _permission: 'administer station entity'
 
-station_entity_example.station_add:
+se_econ_entities_station.station_add:
   path: '/se_econ_entities_station/add'
   defaults:
     # Calls the form.add controller, defined in the station entity.
@@ -49,7 +49,7 @@ entity.se_econ_entities_station.delete_form:
   requirements:
     _entity_access: 'se_econ_entities_station.delete'
 
-se_econ_entities.station_settings:
+se_econ_entities_station.station_settings:
   path: 'admin/structure/se_econ_entities_station_settings'
   defaults:
     _form: '\Drupal\se_econ_entities\Form\StationSettingsForm'
@@ -105,7 +105,7 @@ entity.se_econ_entities_faction.delete_form:
   requirements:
     _entity_access: 'se_econ_entities_faction.delete'
 
-se_econ_entities.faction_settings:
+se_econ_entities_faction.faction_settings:
   path: 'admin/structure/se_econ_entities_faction_settings'
   defaults:
     _form: '\Drupal\se_econ_entities\Form\FactionSettingsForm'
@@ -161,7 +161,7 @@ entity.se_econ_entities_server.delete_form:
   requirements:
     _entity_access: 'se_econ_entities_server.delete'
 
-se_econ_entities.server_settings:
+se_econ_entities_server.server_settings:
   path: 'admin/structure/se_econ_entities_server_settings'
   defaults:
     _form: '\Drupal\se_econ_entities\Form\ServerSettingsForm'
@@ -190,7 +190,7 @@ entity.se_econ_entities_commodity.collection:
     # Checks for permission directly.
     _permission: 'administer commodity entity'
 
-commodity_entity_example.commodity_add:
+se_econ_entities_commodity.commodity_add:
   path: '/se_econ_entities_commodity/add'
   defaults:
     # Calls the form.add controller, defined in the commodity entity.
@@ -217,7 +217,7 @@ entity.se_econ_entities_commodity.delete_form:
   requirements:
     _entity_access: 'se_econ_entities_commodity.delete'
 
-se_econ_entities.commodity_settings:
+se_econ_entities_commodity.commodity_settings:
   path: 'admin/structure/se_econ_entities_commodity_settings'
   defaults:
     _form: '\Drupal\se_econ_entities\Form\CommoditySettingsForm'

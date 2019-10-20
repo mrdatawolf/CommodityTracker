@@ -233,7 +233,6 @@ class Station extends ContentEntityBase implements StationInterface {
         $fields['faction_id'] = BaseFieldDefinition::create('entity_reference')
             ->setLabel(t('Faction Name'))
             ->setDescription(t('The Name of the associated faction.'))
-            ->setSetting('target_type', 'faction')
             ->setSetting('handler', 'default')
             ->setDisplayOptions('view', array(
                 'label' => 'above',
@@ -253,13 +252,13 @@ class Station extends ContentEntityBase implements StationInterface {
             ->setDisplayConfigurable('form', TRUE)
             ->setDisplayConfigurable('view', TRUE);
         
-        $fields['x'] = BaseFieldDefinition::create('x')
+        $fields['x'] = BaseFieldDefinition::create('float')
             ->setLabel(t('X GPS'))
             ->setDescription(t('The X coordinates of the gps.'));
-        $fields['y'] = BaseFieldDefinition::create('y')
+        $fields['y'] = BaseFieldDefinition::create('float')
             ->setLabel(t('Y GPS'))
             ->setDescription(t('The Y coordinates of the gps.'));
-        $fields['z'] = BaseFieldDefinition::create('z')
+        $fields['z'] = BaseFieldDefinition::create('float')
             ->setLabel(t('Z GPS'))
             ->setDescription(t('The Z coordinates of the gps.'));
         $fields['created'] = BaseFieldDefinition::create('created')
